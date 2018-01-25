@@ -11,7 +11,7 @@ def main():
     """ Calls the other functions to test them. """
     #run_test_largest_number()
     run_test_largest_negative_number()
-    #run_test_first_is_elsewhere_too()
+    run_test_first_is_elsewhere_too()
 
 
 def run_test_largest_number():
@@ -78,23 +78,25 @@ def largest_number(seq_seq):
     where each subsequence contains only numbers.
     """
     # ------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # DONE: 3. Implement and test this function.
     #   Note that you should write its TEST function first (above).
     # ------------------------------------------------------------------
 
-    max_number = 0
+    sequence=[]
+
     for k in range(len(seq_seq)):
-        sublist = seq_seq[k]
+        if len(seq_seq[k]) != 0:
+            sequence.append(seq_seq[k])
 
-        for j in range(len(sublist)):
-            if max_number < sublist[j]:
-                max_number = sublist[j]
-                print(max_number)
-
-    if max_number == 0:
+    if len(sequence) == 0:
         return None
 
-    return max_number
+    max = sequence[0][0]
+    for g in range(len(sequence)):
+            for j in range(len(sequence[g])):
+               if max<sequence[g][j]:
+                max=sequence[g][j]
+    return max
 
 def run_test_largest_negative_number():
     """ Tests the    largest_negative_number    function. """
@@ -111,20 +113,19 @@ def run_test_largest_negative_number():
     print('-------------------------------------------------')
 
     # Test 1:
-    expected = -2
-    answer = largest_negative_number([(3, 1, -4),
-                             (13, -10, -11, 7, 10),
-                             [1, -2, 3, 4]])
+    expected = -2.6
+    answer = largest_negative_number([(30, -5, 8, -20),
+         (100, -2.6, 88, -40, -5), (400, 500)])
     print('Expected and actual are:', expected, answer)
 
     # Test 2:
     expected = None
-    answer = largest_negative_number(([], (12345), [5678]))
+    answer = largest_negative_number(([], (12345,), [5678,]))
     print('Expected and actual are:', expected, answer)
 
     # Test 3:
     expected = -556
-    answer = largest_negative_number(([-556], [-1905], [-682]))
+    answer = largest_negative_number(([-556,], [-1905,], [-682,]))
     print('Expected and actual are:', expected, answer)
 
     # Test 4:
@@ -165,18 +166,22 @@ def largest_negative_number(seq_seq):
     #   give sequence of sequences plus any non-list variables you want).
     # ------------------------------------------------------------------
 
+
+
     max_neg = 0
     for k in range(len(seq_seq)):
         sublist = seq_seq[k]
 
         for j in range(len(sublist)):
-            if max_neg > sublist[j]:
+           # if max_neg > sublist[j]:
+            if sublist[j] < max_neg:
                 max_neg = sublist[j]
 
     if max_neg == 0:
         return None
 
     return max_neg
+
 
 def run_test_first_is_elsewhere_too():
     """ Tests the    first_is_elsewhere_too    function. """
@@ -409,7 +414,7 @@ def first_is_elsewhere_too(seq_seq):
     and the given argument is a sequence of sequences.
     """
     # ------------------------------------------------------------------
-    # TODO: 6. Implement and test this function.
+    # DONE: 6. Implement and test this function.
     #          Some tests are already written for you (above).
     #
     # IMPLEMENTATION RESTRICTION:
@@ -425,7 +430,18 @@ def first_is_elsewhere_too(seq_seq):
     #   practice at loops within loops (within loops within ...)
     # ------------------------------------------------------------------
 
+    if len(seq_seq[0])==0:
+        return False
 
+    for k in range(len(seq_seq[0])):
+        check_dup = seq_seq[0][k]
+
+        for j in range(1, len(seq_seq)):
+            for s in range(len(seq_seq[j])):
+                if seq_seq[j][s] == check_dup:
+                    return True
+
+    return False
 
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
